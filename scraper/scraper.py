@@ -20,8 +20,10 @@ def get_section_id(main_title, last_h2, last_h3, last_h4, last_h5):
 #################
 
 # Open a txt file for search queries(title/section/...) and for paragraph texts
-os.remove("queries.txt")
-os.remove("paragraphs.txt")
+if(os.path.exists("queries.txt")):
+    os.remove("queries.txt")
+if(os.path.exists("paragraphs.txt")):
+    os.remove("paragraphs.txt")
 queries_file = open("queries.txt", "a")
 paragraphs_file = open("paragraphs.txt", "a")
 
