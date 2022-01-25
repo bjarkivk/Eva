@@ -1,3 +1,4 @@
 node_modules/
-scraper/paragraphs.txt
-scraper/queries.txt
+
+paragraphs.txt
+queries.txt
