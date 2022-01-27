@@ -3,7 +3,7 @@ const fs = require("fs");
 const util = require("util");
 
 const jsonstring = fs.readFileSync(
-  __dirname + "/Paragraphs/test.json",
+  __dirname + "/scraper/paragraphs.json",
   "utf-8"
 );
 

@@ -22,10 +22,10 @@ def get_section_id(main_title, last_h2, last_h3, last_h4, last_h5):
 # Open a txt file for search queries(title/section/...) and for paragraph texts
 if(os.path.exists("queries.txt")):
     os.remove("queries.txt")
-if(os.path.exists("paragraphs.txt")):
-    os.remove("paragraphs.txt")
+if(os.path.exists("paragraphs.json")):
+    os.remove("paragraphs.json")
 queries_file = open("queries.txt", "a")
-paragraphs_file = open("paragraphs.txt", "a")
+paragraphs_file = open("paragraphs.json", "a")
 
 # Open the list of articles to read
 article_file = open('listOfArticles.txt', 'r')
@@ -85,7 +85,12 @@ for index, line in enumerate(lines):
                 paragraph = paragraph.replace('\n', ' ') # if last character is a newline character, then replace it with space
                 paragraph = paragraph.strip() # remove whitespace in beginning and at the end of string
                 if paragraph !='':
-                    paragraphs_file.write('[' + section_id + ']' + ' ' + paragraph)
+                    # Write paragraph to file on a json format
+
+                    paragraphs_file.write('{"index":{}}') # According to Elasticsearch documentation we have to seperate each paragraoh with this json object
+                    paragraphs_file.write('\n')
+
+                    paragraphs_file.write('{"id": "[' + section_id + ']", "paragraph": "' + paragraph + '"}') # The paragraph itself and its id
                     paragraphs_file.write('\n')
 
             
