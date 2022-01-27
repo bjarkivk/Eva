@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import os
+import json
 
 # Functions
 def get_section_id(main_title, last_h2, last_h3, last_h4, last_h5):
@@ -87,10 +88,15 @@ for index, line in enumerate(lines):
                 if paragraph !='':
                     # Write paragraph to file on a json format
 
+                    x = {
+                        "id": "[" + section_id + "]",
+                        "paragraph" : paragraph
+                    }
+                    json_paragraph = json.dumps(x, ensure_ascii=False)
+
                     paragraphs_file.write('{"index":{}}') # According to Elasticsearch documentation we have to seperate each paragraoh with this json object
                     paragraphs_file.write('\n')
-
-                    paragraphs_file.write('{"id": "[' + section_id + ']", "paragraph": "' + paragraph + '"}') # The paragraph itself and its id
+                    paragraphs_file.write(json_paragraph)
                     paragraphs_file.write('\n')
 
             
