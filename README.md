@@ -2,13 +2,26 @@
 
 Creates search **Eva**luation datasets from Wikipedia text.
 
-To run:
+## To run:
+
+Prerequisites:
+
+- Python
+- Node.js
+- Elasticsearch running on localhost:9200
+
+Install packages:
+
+`$ npm i`
 
 Scrape listed wikipedia pages and put them into a json file:
-$ python3 scraper.py
 
-If you have elasticsearch running locally on port 9200 this will create an index:
-$ node createIndex.js
+`$ python3 scraper.py`
 
-This will index the wikipedia text you scraped.
-$ node indexSomeFiles.js
+Create an index:
+
+`$ node createIndex.js`
+
+Index the wikipedia text you scraped.
+
+`$ node indexSomeFiles.js`
