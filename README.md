@@ -14,11 +14,11 @@ Install packages:
 
 `$ npm i`
 
-Scrape listed wikipedia pages and put them into a json file:
+Navigate to scraper folder. Scrape listed wikipedia pages and put them into a json file:
 
 `$ python3 scraper.py`
 
-Create an index:
+Navigate to root. Create an index:
 
 `$ node createIndex.js`
 
