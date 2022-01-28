@@ -8,7 +8,7 @@ const jsonstring = fs.readFileSync(
 );
 
 const data = jsonstring;
-console.log(data);
+// console.log(data);
 
 const options = {
   hostname: "localhost",
@@ -25,7 +25,7 @@ const req = http.request(options, (res) => {
   console.log(`statusCode: ${res.statusCode}`);
 
   res.on("data", (d) => {
-    process.stdout.write(d);
+    // process.stdout.write(d);
   });
 });
 

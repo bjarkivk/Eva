@@ -6,7 +6,11 @@ client.indices.create(
     body: {
       mappings: {
         properties: {
-          id: { type: "text" },
+          id1: { type: "keyword" },
+          id2: { type: "keyword" },
+          id3: { type: "keyword" },
+          id4: { type: "keyword" },
+          id5: { type: "keyword" },
           paragraph: { type: "text" },
         },
       },

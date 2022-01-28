@@ -4,16 +4,16 @@ import os
 import json
 
 # Functions
-def get_section_id(main_title, last_h2, last_h3, last_h4, last_h5):
-    if(last_h2):
-        if(last_h3):
-            if(last_h4):
-                if(last_h5):
-                    return main_title+'/'+last_h2+'/'+last_h3+'/'+last_h4+'/'+last_h5
-                return main_title+'/'+last_h2+'/'+last_h3+'/'+last_h4
-            return main_title+'/'+last_h2+'/'+last_h3
-        return main_title+'/'+last_h2
-    return main_title
+# def get_section_id(main_title, last_h2, last_h3, last_h4, last_h5):
+#     if(last_h2):
+#         if(last_h3):
+#             if(last_h4):
+#                 if(last_h5):
+#                     return main_title+'/'+last_h2+'/'+last_h3+'/'+last_h4+'/'+last_h5
+#                 return main_title+'/'+last_h2+'/'+last_h3+'/'+last_h4
+#             return main_title+'/'+last_h2+'/'+last_h3
+#         return main_title+'/'+last_h2
+#     return main_title
 
 
 #################
@@ -81,7 +81,7 @@ for index, line in enumerate(lines):
                 queries_file.write(main_title + '/' + last_h2 + '/' + last_h3 + '/' + last_h4 + '/' + last_h5)
                 queries_file.write('\n')
             elif(last_element.name =='p' or last_element.name =='ul' or last_element.name =='ol'):
-                section_id = get_section_id(main_title, last_h2, last_h3, last_h4, last_h5)
+                # section_id = get_section_id(main_title, last_h2, last_h3, last_h4, last_h5)
                 paragraph = last_element.get_text()
                 paragraph = paragraph.replace('\n', ' ') # if last character is a newline character, then replace it with space
                 paragraph = paragraph.strip() # remove whitespace in beginning and at the end of string
@@ -89,7 +89,11 @@ for index, line in enumerate(lines):
                     # Write paragraph to file on a json format
 
                     x = {
-                        "id": "[" + section_id + "]",
+                        "id1": main_title,
+                        "id2": last_h2,
+                        "id3": last_h3,
+                        "id4": last_h4,
+                        "id5": last_h5,
                         "paragraph" : paragraph
                     }
                     json_paragraph = json.dumps(x, ensure_ascii=False)
