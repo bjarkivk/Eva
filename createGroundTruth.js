@@ -1,8 +1,17 @@
 const http = require("http");
+var fs = require("fs");
 
 // Functions
 
-// takes arg = "[a/b/c]"  separates into array [a,b,c]
+// Writes JSON object obj with elasticsearch results to a file
+function write_to_file(obj) {
+  fs.writeFile("groundTruthResults.json", JSON.stringify(obj), function (err) {
+    if (err) throw err;
+    console.log("Search results saved to groundTruthResults.json");
+  });
+}
+
+// Takes arg = "[a/b/c]" and separates into array [a,b,c]
 function seperate(arg) {
   let firstChar = arg.charAt(0);
   let lastChar = arg.charAt(arg.length - 1);
@@ -18,31 +27,80 @@ function seperate(arg) {
 const arg = process.argv[2];
 searchArray = seperate(arg);
 
-// Three searches to fetch all paragraphs necessary for the ground truth of example [a/b/c/d/e]
-
-// First, fetch all paragraphs with exactly id=[a/b/c/d/e] and
-
-// Second, fetch all paragraphs with id=[a/b/*/*/*]
-
-// Third, fetch all paragraphs with id=[a/*/*/*/*]
-
+// Three Elasticsearch searches combined in one to fetch all paragraphs necessary for the ground truth of example [a/b/c/d/e]
 const data = JSON.stringify({
   size: 1000,
   query: {
-    constant_score: {
-      filter: {
-        bool: {
-          must: [
-            { match_phrase: { id1: "Polisen i Finland" } },
-            { match_phrase: { id2: "" } },
-          ],
+    bool: {
+      should: [
+        // First, fetch all paragraphs with exactly id=[a/b/c/d/e]
+        {
+          constant_score: {
+            filter: {
+              bool: {
+                must: [
+                  { match_phrase: { id1: searchArray[0] } },
+                  { match_phrase: { id2: searchArray[1] || "" } },
+                  { match_phrase: { id3: searchArray[2] || "" } },
+                  { match_phrase: { id4: searchArray[3] || "" } },
+                  { match_phrase: { id5: searchArray[4] || "" } },
+                ],
+              },
+            },
+            boost: 3,
+          },
         },
-      },
+
+        // Second, fetch all paragraphs with id=[a/b/*/*/*]
+        {
+          constant_score: {
+            filter: {
+              bool: {
+                must_not: {
+                  bool: {
+                    must: [
+                      { match_phrase: { id1: searchArray[0] } },
+                      { match_phrase: { id2: searchArray[1] || "" } },
+                      { match_phrase: { id3: searchArray[2] || "" } },
+                      { match_phrase: { id4: searchArray[3] || "" } },
+                      { match_phrase: { id5: searchArray[4] || "" } },
+                    ],
+                  },
+                },
+                must: [
+                  { match_phrase: { id1: searchArray[0] } },
+                  { match_phrase: { id2: searchArray[1] || "" } },
+                ],
+              },
+            },
+            boost: 2,
+          },
+        },
+
+        // Third, fetch all paragraphs with id=[a/*/*/*/*]
+        {
+          constant_score: {
+            filter: {
+              bool: {
+                must_not: {
+                  bool: {
+                    must: [
+                      { match_phrase: { id1: searchArray[0] } },
+                      { match_phrase: { id2: searchArray[1] || "" } },
+                    ],
+                  },
+                },
+
+                must: [{ match_phrase: { id1: searchArray[0] } }],
+              },
+            },
+            boost: 1,
+          },
+        },
+      ],
     },
   },
 });
-
-console.log(data);
 
 const options = {
   hostname: "localhost",
@@ -69,8 +127,9 @@ const req = http.request(options, (res) => {
       str += d;
     })
     .on("end", () => {
-      console.log(str);
       // write to file
+      const obj = JSON.parse(str);
+      write_to_file(obj);
     });
 });
 
