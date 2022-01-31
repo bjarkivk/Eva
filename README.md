@@ -1,6 +1,6 @@
 # Eva
 
-Creates search **Eva**luation datasets from Wikipedia text.
+Creates a search **Eva**luation dataset from Wikipedia text.
 
 ## Getting started
 
