@@ -29,10 +29,10 @@ queries_file = open("queries.txt", "a")
 paragraphs_file = open("paragraphs.json", "a")
 
 # Open the list of articles to read
-article_file = open('listOfArticles.txt', 'r')
+article_file = open('../articleSampler/articles.txt', 'r')
 lines = article_file.readlines()
 
-# Loop over Wikipedia articles stated in listOfArticles.txt
+# Loop over Wikipedia articles stated in articles.txt
 for index, line in enumerate(lines):
 
     # Scrape the webpage of the article with BeautifulSoup
@@ -41,7 +41,7 @@ for index, line in enumerate(lines):
     soup = BeautifulSoup(response.content, 'html.parser')
 
     # Write main title to the queries file
-    main_title = soup.find(id="firstHeading").string
+    main_title = soup.find(id="firstHeading").get_text()
     queries_file.write(main_title)
     queries_file.write('\n')
 
@@ -60,24 +60,24 @@ for index, line in enumerate(lines):
                 last_h3 = ''
                 last_h4 = ''
                 last_h5 = ''
-                last_h2 = last_element.find("span", class_="mw-headline").string
-                if ( last_h2 == 'Se även' or last_h2 == 'Referenser' or last_h2 == 'Externa länkar' or last_h2 == 'Noter och referenser' or last_h2 == 'Källor' or last_h2 == 'Noter'):
+                last_h2 = last_element.find("span", class_="mw-headline").get_text()
+                if ( last_h2 == 'Se även' or last_h2 == 'Referenser' or last_h2 == 'Externa länkar' or last_h2 == 'Noter och referenser' or last_h2 == 'Källor' or last_h2 == 'Noter' or last_h2 == 'Vidare läsning' or last_h2 == 'Fotnoter'):
                     break
                 queries_file.write(main_title + '/' + last_h2)
                 queries_file.write('\n')
             elif(last_element.name == 'h3'):
                 last_h4 = ''
                 last_h5 = ''
-                last_h3 = last_element.find("span", class_="mw-headline").string
+                last_h3 = last_element.find("span", class_="mw-headline").get_text()
                 queries_file.write(main_title + '/' + last_h2 + '/' + last_h3)
                 queries_file.write('\n')
             elif(last_element.name == 'h4'):
                 last_h5 = ''
-                last_h4 = last_element.find("span", class_="mw-headline").string
+                last_h4 = last_element.find("span", class_="mw-headline").get_text()
                 queries_file.write(main_title + '/' + last_h2 + '/' + last_h3 + '/' + last_h4)
                 queries_file.write('\n')
             elif(last_element.name == 'h5'):
-                last_h5 = last_element.find("span", class_="mw-headline").string
+                last_h5 = last_element.find("span", class_="mw-headline").get_text()
                 queries_file.write(main_title + '/' + last_h2 + '/' + last_h3 + '/' + last_h4 + '/' + last_h5)
                 queries_file.write('\n')
             elif(last_element.name =='p' or last_element.name =='ul' or last_element.name =='ol'):
