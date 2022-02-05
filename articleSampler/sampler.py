@@ -40,18 +40,31 @@ def should_we_keep_article(soup):
 # Start of code #
 #################
 
-# Open a txt file Wikipedia paths
-if(os.path.exists("articles.txt")):
-    os.remove("articles.txt")
-articles_file = open("articles.txt", "a")
 
-# test=["https://sv.wikipedia.org/wiki/Polisen_i_Finland", "https://sv.wikipedia.org/wiki/Gr%C3%A4nsbevakningsv%C3%A4sendet", "https://sv.wikipedia.org/wiki/F%C3%B6runders%C3%B6kning", "https://sv.wikipedia.org/wiki/The_Beatles", "https://sv.wikipedia.org/wiki/The_Beatles", "https://sv.wikipedia.org/wiki/F%C3%B6runders%C3%B6kning"]
 
-# n=len(test)
-n = 3000 # Number of articles to sample
-start = time.time()
 
 set_of_articles = set()
+articles_file = open("articles.txt", "r") # Open a txt file Wikipedia paths
+lines = articles_file.readlines()
+
+# Write already collected urls to set so we don't sample old articles again
+for line in lines:
+    line = line.replace('\n', '') 
+    if line != '':
+        set_of_articles.add(line)
+articles_file.close()
+
+old_articles_count = len(set_of_articles)
+
+
+
+
+# test=["https://sv.wikipedia.org/wiki/Polisen_i_Finland", "https://sv.wikipedia.org/wiki/Fritz_Bengtson"]
+
+# n=len(test)
+n = 100 # Number of articles to sample
+start = time.time()
+
 
 
 for index in range(n):
@@ -75,11 +88,18 @@ for index in range(n):
 end = time.time()
 
 print("Sampling finished!")
-print(len(set_of_articles), "of", n, "articles saved.")
+print(len(set_of_articles) - old_articles_count, "of", n, "articles saved.")
+print("Articles saved before this run:", old_articles_count)
+print("Total articles now in file:", len(set_of_articles))
 end = time.time()
 print("Time elapsed:", end - start)
 print()
 
+
+# Open file again
+if(os.path.exists("articles.txt")):
+    os.remove("articles.txt")
+articles_file = open("articles.txt", "a")
 
 # Write path of article to file
 print('Writing articles to file...')
