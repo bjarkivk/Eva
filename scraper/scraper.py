@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import os
 import json
+import time
 
 # Functions
 # def get_section_id(main_title, last_h2, last_h3, last_h4, last_h5):
@@ -20,6 +21,8 @@ import json
 # Start of code #
 #################
 
+start = time.time()
+
 # Open a txt file for search queries(title/section/...) and for paragraph texts
 if(os.path.exists("queries.txt")):
     os.remove("queries.txt")
@@ -34,6 +37,8 @@ lines = article_file.readlines()
 
 # Loop over Wikipedia articles stated in articles.txt
 for index, line in enumerate(lines):
+
+    print( index+1, "/", len(lines))
 
     # Scrape the webpage of the article with BeautifulSoup
     line = line.replace('\n', '') 
@@ -114,3 +119,7 @@ for index, line in enumerate(lines):
 article_file.close()
 queries_file.close()
 paragraphs_file.close()
+
+end = time.time()
+print("Time elapsed:", end - start)
+print()
