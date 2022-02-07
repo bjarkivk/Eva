@@ -62,7 +62,7 @@ old_articles_count = len(set_of_articles)
 # test=["https://sv.wikipedia.org/wiki/Polisen_i_Finland", "https://sv.wikipedia.org/wiki/Fritz_Bengtson"]
 
 # n=len(test)
-n = 100 # Number of articles to sample
+n = 1000 # Number of articles to sample
 start = time.time()
 
 
