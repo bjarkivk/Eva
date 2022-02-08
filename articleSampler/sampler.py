@@ -62,11 +62,11 @@ old_articles_count = len(set_of_articles)
 # test=["https://sv.wikipedia.org/wiki/Polisen_i_Finland", "https://sv.wikipedia.org/wiki/Fritz_Bengtson"]
 
 # n=len(test)
-n = 6000 # Number of articles to sample
+n = 2000 # Number of articles to sample
 start = time.time()
 
 
-
+# Sample n random articles and keep if they fit the criteria of should_we_keep_article() function
 for index in range(n):
 # for index in test:
     response = requests.get(url="https://slumpartikel.toolforge.org/") # random Swedish Wikipedia article not created by a bot
