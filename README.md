@@ -1,4 +1,4 @@
-# Eva
+# Search evaluation dataset - Eva
 
 Creates a search **Eva**luation dataset from Wikipedia text.
 
