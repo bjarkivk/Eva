@@ -38,7 +38,8 @@ lines = article_file.readlines()
 # Loop over Wikipedia articles stated in articles.txt
 for index, line in enumerate(lines):
 
-    print( index+1, "/", len(lines))
+    if ((index+1) % 10 == 0):
+        print( index+1, "/", len(lines))
 
     # Scrape the webpage of the article with BeautifulSoup
     line = line.replace('\n', '') 
@@ -103,7 +104,7 @@ for index, line in enumerate(lines):
                     }
                     json_paragraph = json.dumps(x, ensure_ascii=False)
 
-                    paragraphs_file.write('{"index":{}}') # According to Elasticsearch documentation we have to seperate each paragraoh with this json object
+                    paragraphs_file.write('{"index":{}}') # According to Elasticsearch documentation we have to seperate each paragraph with this json object
                     paragraphs_file.write('\n')
                     paragraphs_file.write(json_paragraph)
                     paragraphs_file.write('\n')
