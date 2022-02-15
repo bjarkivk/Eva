@@ -3,3 +3,4 @@ node_modules/
 queries.txt
 paragraphs.json
 groundTruthResults.json
+paragraphs_chunked*
