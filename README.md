@@ -35,10 +35,10 @@ Then run this command:
 ## Creating ground truth file for a query
 
 Queries are on the form \[title/heading1/heading1.5\].
-So if you have for example indexed the article https://sv.wikipedia.org/wiki/Polisen_i_Finland we could searches like this for example:
+So if you have for example indexed the article https://sv.wikipedia.org/wiki/Polisen_i_Finland we could do searches like this:
 
-`$ node createGroundTruth.js "[Polisen i Finland/Åland]"` -> Serching for with [Polisen i Finland/Åland]
+`$ node createGroundTruth.js "[Polisen i Finland/Åland]"` -> Serching with query [Polisen i Finland/Åland]
 
-`$ node createGroundTruth.js "[Polisen i Finland]"` -> Serching for with [Polisen i Finland]
+`$ node createGroundTruth.js "[Polisen i Finland]"` -> Serching with query [Polisen i Finland]
 
-`$ node createGroundTruth.js "[Polisen i Finland/Polisens grader och utbildning/Utbildning]""` -> Serching for with [Polisen i Finland/Polisens grader och utbildning/Utbildning]
+`$ node createGroundTruth.js "[Polisen i Finland/Polisens grader och utbildning/Utbildning]""` -> Serching with query [Polisen i Finland/Polisens grader och utbildning/Utbildning]
